@@ -50,6 +50,7 @@ typedef struct dlistComplex{
 void trim_end(char *text);
 char** str_to_str_array(char* str, char* spiltor, unsigned int counts);
 int str2complex(const char *str, float *real, float *img);
+unsigned int compare_complex(dlistComplex *a, dlistComplex *b);
 dlistComplex *insert_complex(dlistComplex *trail, float real, float img);
 dlistComplex *insert_str_arr(dlistComplex *trail, char **arr_str, int counts);
 
@@ -107,8 +108,32 @@ int main(){
       if(!head)   printf("The list is empty. Type \"build\" to build a list.\n");
       else        current = insert_str_arr(current, arr_str+1, counts-1);
     }
-    else if(!strcmp(arr_str[0], CMD_SEARCH)){       // TODO
-      printf("%s not implemented yet.\n", arr_str[0]);
+    else if(!strcmp(arr_str[0], CMD_SEARCH)){
+      if(counts<2){
+        printf("Please give one complex number to search.\n");
+        printf("Example: search 3+7.8i\n");
+      }
+      else {
+        dlistComplex *temp = head->R;
+        dlistComplex target;
+        int i=0, found=0;
+        float real, img;
+
+        // Convert input string to complex
+        str2complex(arr_str[1], &real, &img);
+        target.real = real;
+        target.img = img;
+
+        // Iterates the list to find target
+        for(temp=temp; temp!=head; temp=temp->R){
+          if(!compare_complex(temp, &target)){
+            printf("Node %d: %g%+gi\n", i, temp->real, temp->img);
+            found++;
+          }
+          i++;
+        }
+        printf("Search total hits %d times.\n", found);
+      }
     }
     else if(!strcmp(arr_str[0], CMD_DELETE)){       // TODO
       printf("%s not implemented yet.\n", arr_str[0]);
@@ -119,8 +144,8 @@ int main(){
         dlistComplex *temp = head->R;
         int i=0;
         for(temp=temp; temp!=head; temp=temp->R){
+          printf("Node %d: %g%+gi\n", i, temp->real, temp->img);
           i++;
-          printf("Node %d:%g%+gi\n", i, temp->real, temp->img);
         }
       }
     }
@@ -143,6 +168,22 @@ int main(){
   printf("\n\nProgram ends here.\n");
 }
 
+/** Compare two complex number, return 0 if a==b
+ *  @param a A complex number struct pointer
+ *  @param b A complex number struct pointer
+ *  @return abs(a->real - b->real)+abs(a->img  - b->img)
+ *          which is 0 if complex number a equals to complex number b
+ * */
+unsigned int compare_complex(dlistComplex *a, dlistComplex *b){
+  int real_diff = a->real - b->real;
+  int  img_diff = a->img  - b->img;
+  
+  // limit the difference at positive or zero
+  real_diff = real_diff>=0 ? real_diff : -1*real_diff;
+  img_diff  =  img_diff>=0 ?  img_diff : -1*img_diff;
+
+  return real_diff+img_diff;
+}
 
 /* Insert the string array as nodes to trail and return the new trail */
 dlistComplex *insert_str_arr(dlistComplex *trail, char **arr_str, int counts){
