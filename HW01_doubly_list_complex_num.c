@@ -108,10 +108,10 @@ int main(){
       if(!head)   printf("The list is empty. Type \"build\" to build a list.\n");
       else        current = insert_str_arr(current, arr_str+1, counts-1);
     }
-    else if(!strcmp(arr_str[0], CMD_SEARCH)){
+    else if(!strcmp(arr_str[0], CMD_SEARCH) || !strcmp(arr_str[0], CMD_COUNT)){
       if(counts<2){
         printf("Please give one complex number to search.\n");
-        printf("Example: search 3+7.8i\n");
+        printf("Example: \"search 3+7.8i\" or count 10-4.5i\n");
       }
       else {
         dlistComplex *node = head->R;
@@ -179,9 +179,6 @@ int main(){
           i++;
         }
       }
-    }
-    else if(!strcmp(arr_str[0], CMD_COUNT)){        // TODO
-      printf("%s not implemented yet.\n", arr_str[0]);
     }
     else if(!strcmp(arr_str[0], CMD_MID)){          // TODO
       printf("%s not implemented yet.\n", arr_str[0]);
