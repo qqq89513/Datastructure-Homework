@@ -114,7 +114,7 @@ int main(){
         printf("Example: search 3+7.8i\n");
       }
       else {
-        dlistComplex *temp = head->R;
+        dlistComplex *node = head->R;
         dlistComplex target;
         int i=0, found=0;
         float real, img;
@@ -125,9 +125,9 @@ int main(){
         target.img = img;
 
         // Iterates the list to find target
-        for(temp=temp; temp!=head; temp=temp->R){
-          if(!compare_complex(temp, &target)){
-            printf("Node %d: %g%+gi\n", i, temp->real, temp->img);
+        for(node=node; node!=head; node=node->R){
+          if(!compare_complex(node, &target)){
+            printf("Node %d: %g%+gi\n", i, node->real, node->img);
             found++;
           }
           i++;
@@ -135,8 +135,39 @@ int main(){
         printf("Search total hits %d times.\n", found);
       }
     }
-    else if(!strcmp(arr_str[0], CMD_DELETE)){       // TODO
-      printf("%s not implemented yet.\n", arr_str[0]);
+    else if(!strcmp(arr_str[0], CMD_DELETE)){
+      if(counts<2){
+        printf("Please give one complex number to delete.\n");
+        printf("Example: delete 3+7.8i\n");
+      }
+      else {
+        dlistComplex *node = head->R;
+        dlistComplex *temp;
+        dlistComplex target;
+        int i=0, del_cnt=0;
+        float real, img;
+
+        // Convert input string to complex and delete it
+        str2complex(arr_str[1], &real, &img);
+        target.real = real;
+        target.img = img;
+
+        // Iterates the list to find target
+        for(node=node; node!=head; node=node->R){
+          if(!compare_complex(node, &target)){
+            printf("Delete Node %d: %g%+gi\n", i, node->real, node->img);
+            (node->L)->R = node->R;
+            (node->R)->L = node->L;
+
+            temp = node;
+            node = node->L;
+            free(temp);
+            del_cnt++;
+          }
+          i++;
+        }
+        printf("Total %d nodes deleted.\n", del_cnt);
+      }
     }
     else if(!strcmp(arr_str[0], CMD_PRINT)){
       if(!head)   printf("The list is empty.\n");
