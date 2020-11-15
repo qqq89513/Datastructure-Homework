@@ -205,13 +205,29 @@ int main(){
     else if(!strcmp(arr_str[0], CMD_HELP))  printf(HELP_MSG);
     else if(!strcmp(arr_str[0], CMD_EXIT))  break;
     else                                    printf("Unkonw command \"%s\", try \"help\" to get more information.\n", arr_str[0]);
+
+    // Free the memory and leave the program
+    for(unsigned int i=0; i<counts; i++)
+      free(arr_str[i]);
+    free(arr_str);
   }
 
+  // Free the memory(erase the list)
+  if(head){       // non empty list
+    dlistComplex *node = NULL;
+    dlistComplex *temp = NULL;
+    int i=0;
 
-  // free the memory and leave the program
-  for(unsigned int i=0; i<counts; i++)
-    free(arr_str[i]);
-  free(arr_str);
+    for(node=head; node->R!=head;){
+      temp = node;
+      node = node->R;
+      if(DEBUG)   printf("Free real:%g, img:%g\n", temp->real, temp->img);
+      free(temp);
+    }
+    printf("Free real:%g, img:%g\n", node->real, node->img);
+    free(node); // free the last node
+  }
+
   printf("\n\nProgram ends here.\n");
 }
 
