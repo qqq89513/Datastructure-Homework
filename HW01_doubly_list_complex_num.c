@@ -180,8 +180,27 @@ int main(){
         }
       }
     }
-    else if(!strcmp(arr_str[0], CMD_MID)){          // TODO
-      printf("%s not implemented yet.\n", arr_str[0]);
+    else if(!strcmp(arr_str[0], CMD_MID)){
+      if(!head)   printf("The list is empty.\n");
+      else{       // non empty list
+        dlistComplex *node = head->R;
+
+        // Count for how many nodes
+        int node_cnt = 0;
+        for(node=node; node!=head; node=node->R)
+          node_cnt++;
+
+        // Find the middle one
+        int i;
+        node = head->R; // points to the first node
+        for(i=0; i<node_cnt/2; i++)
+          node = node->R;
+
+        // Print the middle one, print two nodes if the number of nodes are even
+        if(node_cnt%2==0)
+          printf("Node %d: %g%+gi\n", i-1, (node->L)->real, (node->L)->img);
+        printf("Node %d: %g%+gi\n", i, node->real, node->img);
+      }
     }
     else if(!strcmp(arr_str[0], CMD_HELP))  printf(HELP_MSG);
     else if(!strcmp(arr_str[0], CMD_EXIT))  break;
