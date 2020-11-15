@@ -172,10 +172,10 @@ int main(){
     else if(!strcmp(arr_str[0], CMD_PRINT)){
       if(!head)   printf("The list is empty.\n");
       else{       // non empty list
-        dlistComplex *temp = head->R;
+        dlistComplex *node = head->R;
         int i=0;
-        for(temp=temp; temp!=head; temp=temp->R){
-          printf("Node %d: %g%+gi\n", i, temp->real, temp->img);
+        for(node=node; node!=head; node=node->R){
+          printf("Node %d: %g%+gi\n", i, node->real, node->img);
           i++;
         }
       }
@@ -186,18 +186,18 @@ int main(){
         dlistComplex *node = head->R;
 
         // Count for how many nodes
-        int node_cnt = 0;
+        int cnt_node = 0;
         for(node=node; node!=head; node=node->R)
-          node_cnt++;
+          cnt_node++;
 
         // Find the middle one
         int i;
         node = head->R; // points to the first node
-        for(i=0; i<node_cnt/2; i++)
+        for(i=0; i<cnt_node/2; i++)
           node = node->R;
 
         // Print the middle one, print two nodes if the number of nodes are even
-        if(node_cnt%2==0)
+        if(cnt_node%2==0)
           printf("Node %d: %g%+gi\n", i-1, (node->L)->real, (node->L)->img);
         printf("Node %d: %g%+gi\n", i, node->real, node->img);
       }
