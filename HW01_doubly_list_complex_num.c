@@ -1,5 +1,5 @@
 //----------USER define------------
-#define DEBUG       1    // print auxiliary text or not
+#define DEBUG       0    // print auxiliary text or not
 #define TEXT_SIZE 64     // size of input text in bytes
 #define SPILTOR   " "    // a character that spilts input array, for example "build 1+3i 3-2i"
 //------END USER define------------
@@ -14,6 +14,7 @@
 #define CMD_MID       "middle"
 #define CMD_EXIT      "exit"
 #define CMD_HELP      "help"
+#pragma region                    // HELP_MSG definition
 #define HELP_MSG " \
   Usage:[OPTION] [COMPLEX]... \n\
   \n\
@@ -32,6 +33,7 @@
   print                 Print the whole list with indexing starting from zero. \n\
                         Each complex number is printed with its index and newline. \n\
 "
+#pragma endregion
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -109,7 +111,9 @@ int main(){
       else        current = insert_str_arr(current, arr_str+1, counts-1);
     }
     else if(!strcmp(arr_str[0], CMD_SEARCH) || !strcmp(arr_str[0], CMD_COUNT)){
-      if(counts<2){
+      if(!head)
+        printf("The list is empty. Type \"build\" to build a list.\n");
+      else if(counts<2){
         printf("Please give one complex number to search.\n");
         printf("Example: \"search 3+7.8i\" or count 10-4.5i\n");
       }
@@ -136,7 +140,9 @@ int main(){
       }
     }
     else if(!strcmp(arr_str[0], CMD_DELETE)){
-      if(counts<2){
+      if(!head)
+        printf("The list is empty. Type \"build\" to build a list.\n");
+      else if(counts<2){
         printf("Please give one complex number to delete.\n");
         printf("Example: delete 3+7.8i\n");
       }
@@ -181,7 +187,7 @@ int main(){
       }
     }
     else if(!strcmp(arr_str[0], CMD_MID)){
-      if(!head)   printf("The list is empty.\n");
+      if(!head)   printf("The list is empty. Type \"build\" to build a list.\n");
       else{       // non empty list
         dlistComplex *node = head->R;
 
