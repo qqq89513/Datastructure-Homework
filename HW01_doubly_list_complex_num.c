@@ -18,9 +18,12 @@
 #define HELP_MSG " \
   Usage:[OPTION] [COMPLEX]... \n\
   \n\
+  [COMPLEX]\n\
+  Single complex.\n\
+  \n\
   [COMPLEX]...\n\
   One or more than one complex number with the format \"a+bi\", \"a\" or \"bi\". \n\
-  A is the real part and b is the imaginary part.\n\
+  a is the real part and b is the imaginary part.\n\
   Multiple complex numbers should be spilted with space. Here is an example:\n\
     10+i i -3.2i -3.5+9.7i 87\n\
   \n\
@@ -30,9 +33,14 @@
                         Build an empty list if [COMPLEX]... is not supplied.\n\
   isempty               Print \"The list is empty.\" or \"The list is not empty.\". \n\
   insert [COMPLEX]...   Insert one or multiple complex numbers into the end of the doubly list. \n\
+  search [COMPLEX]      Search for a complex number. Return the mathed complex numbers with their indexs \n\
+                        and the total matched count \n\
+  rm [COMPLEX]          Delete a complex number in the doubly linked list. \n\
   print                 Print the whole list with indexing starting from zero. \n\
                         Each complex number is printed with its index and newline. \n\
-"
+  count [COMPLEX]       Work like \"search [COMPLEX]\". \n\
+  middle [COMPLEX]      Find the middle element of a list. \n\
+                        (If there are even nodes, then there would be two middle numbers.) \n"
 #pragma endregion
 
 #include <stdio.h>
