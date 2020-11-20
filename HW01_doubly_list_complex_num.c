@@ -226,7 +226,7 @@ int main(){
     free(arr_str);
   }
 
-  // Free the memory(erase the list)
+  // Free the memory before reading next input
   if(head){       // non empty list
     dlistComplex *node = NULL;
     dlistComplex *temp = NULL;
@@ -238,7 +238,8 @@ int main(){
       if(DEBUG)   printf("Free real:%g, img:%g\n", temp->real, temp->img);
       free(temp);
     }
-    printf("Free real:%g, img:%g\n", node->real, node->img);
+    if(DEBUG)
+      printf("Free real:%g, img:%g\n", node->real, node->img);
     free(node); // free the last node
   }
 
